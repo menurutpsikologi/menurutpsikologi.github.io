@@ -1,0 +1,85 @@
+{{ define "main" }}
+
+<div class="accordion" id="cart-accordion">
+  <div class="searchButton_accordeon">
+    <form action="/search/" method="GET">
+      <input type="text" id="search" name="s" placeholder="Search" />
+      <button type="submit" class="btn btn-primary">
+        <i class="fas fa-search" aria-hidden="true"></i>
+      </button>
+    </form>
+  </div>
+ <!--  <div class="accordion-item">
+    <a href="/#list_h1" class="accordion-link" onclick="closeAccordion(event)">PORTOFOLIO</a>
+    <a href="https://github.com/DaddyAnanta1/" target="_blank" rel="noopener noreferrer">GITHUB</a>
+    <a href="https://medium.com/@daddyananta" target="_blank" rel="noopener noreferrer">MEDIUM</a>
+  </div> -->
+  <button class="accordion-button" onclick="togglePanel(this)">
+    Category
+    <span class="accordion-icon">&#9660;</span> <!-- Gunakan simbol Unicode -->
+  </button>
+
+  <div class="panel">
+    <div class="accordion-category_page">
+      {{ range $.Site.Taxonomies.categories.ByCount }}
+      <a class="accordion-category-link" href="/categories/{{ .Name }}">
+        <span class="accordion-category-name">{{ .Name | title }}</span>
+      </a>
+      {{ end }}
+    </div>
+
+  </div>
+</div>
+
+{{ if eq .RelPermalink "/categories/" }}
+<div class="category_page_title">
+  <h1>Category</h1>
+</div>
+<div class="category_page">
+  {{ range $.Site.Taxonomies.categories.ByCount }}
+  <a class="category-link" href="/categories/{{ .Name }}">
+    <span class="category-name"># {{ .Name }}</span>
+    <small class="category-count">({{ .Count }})</small>
+  </a>
+  {{ end }}
+</div>
+{{ else }}
+
+<div class="list_h1_category">
+  <h1>
+    <a href="/">Home </a> <span>></span>
+    <a href="{{ .Permalink }}">{{ .Name }}</a>
+  </h1>
+</div>
+
+<div class="listContainer">
+  {{ range .Paginator.Pages }}
+  <div class="listItem">
+    <img src="{{ .Params.image }}" alt="{{ .Title }}" class="listItemImage">
+    <div class="listItemTexts">
+      <h1 class="listItemTitle">
+        <a href="{{ .Permalink }}">{{ .Title }}</a>
+      </h1>
+
+      <div class="listItemCategories">
+        {{ with .Params.categories }}
+        {{ range . }}
+        <a class="listItemCategory" href="/categories/{{ . | urlize }}">{{ . }}</a>
+        {{ end }}
+        {{ end }}
+
+        {{ with .Params.tags }}
+        {{ range . }}
+        <a class="listItemtags" href="/tags/{{ . | urlize }}">{{ . }}</a>
+        {{ end }}
+        {{ end }}
+      </div>
+    </div>
+  </div>
+  {{ end }}
+</div>
+
+{{ partial "custom_pagination.html" . }}
+
+{{ end }}
+{{ end }}

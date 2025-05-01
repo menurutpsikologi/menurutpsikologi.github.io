@@ -1,0 +1,88 @@
+baseURL = 'https://menurutpsikologi.github.io/'
+languageCode = 'id-ID'
+defaultContentLanguage = "id"
+defaultContentLang = "id"
+title = 'Menurut Psikologi'
+enableRobotsTXT = true
+tableOfContents = true
+
+pagination.pagerSize = 8
+
+[sitemap]
+  changeFreq = ''
+  disable = false
+  filename = 'sitemap.xml'
+  priority = -1
+
+[params]
+    description = "Website ini menyajikan berbagai informasi seputar psikologi manusia, mulai dari cara kerja pola pikir, alasan di balik perilaku manusia, hingga pemahaman mendalam tentang motivasi dan emosi. Dengan mempelajari aspek-aspek penting dalam ilmu psikologi, Anda akan memahami bagaimana pikiran manusia memengaruhi tindakan sehari-hari. Temukan wawasan menarik dan pengetahuan terbaru seputar pengembangan diri, kesehatan mental, serta psikologi kognitif di sini."
+    dateFormat= "2 January 2006"
+    goatcounter = "menurutpsikologi"
+    math = true
+    ShowPageViews = true
+
+[params.social.share]
+    facebook = true
+    linkedin = true
+    twitter = true
+    whatsapp = true
+    email = true
+
+[taxonomies]
+    category = "categories"
+    author = "authors"
+    tag = "tags"
+
+[markup.goldmark.renderer]
+  unsafe = true
+  
+[caches]
+  [caches.images]
+    dir = ':cacheDir/images'
+
+[markup]
+  [markup.goldmark]
+    [markup.goldmark.extensions]
+      [markup.goldmark.extensions.passthrough]
+        enable = true
+        [markup.goldmark.extensions.passthrough.delimiters]
+          block = [['\[', '\]'], ['$$', '$$']]
+          inline = [['\(', '\)']]
+  
+  [markup.tableOfContents]
+    startLevel = 1
+    ordered = false
+    endLevel = 4
+
+[[menu.main]]
+    name = "About Me"
+    url = "/about/"
+    weight = 1
+
+[outputs]
+  home = ["HTML", "RSS", "JSON"]
+  page = ["HTML"]
+  section = ["HTML", "RSS"]
+  taxonomy = ["HTML", "RSS"]
+  term = ["HTML"]
+
+[outputFormats.HTML]
+  mediaType = "text/html"
+  baseName = "index"
+  isPlainText = false
+  rel = "canonical"
+  noUglyURLs = true
+  gzip = true
+  minify = true
+  [[outputFormats.HTML.headers]]
+        cache-control = "public, max-age=7200, no-cache, must-revalidate" # 2 jam, dengan validasi
+    
+[outputFormats.CSS]
+    mediaType = "text/css"
+    baseName = "style"
+    isPlainText = false
+    gzip = true
+    minify = true
+    [[outputFormats.CSS.headers]]
+        cache-control = "public, max-age=31536000, immutable" # 1 Tahun untuk CSS
+

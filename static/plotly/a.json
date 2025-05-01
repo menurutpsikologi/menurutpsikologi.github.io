@@ -1,0 +1,51 @@
+{
+  "data": [
+    {
+      "type": "histogram",
+      "x": "/data/heart_clean.csv",
+      "nbinsx": 10,
+      "marker": {
+        "color": "red"
+      },
+      "histnorm": "percent",
+      "name": "Heart Disease Percentage",
+      "hovertemplate": "Age Range: %{x}<br>Heart Disease Likelihood: %{y:.2f}%",
+      "xbins": {
+        "size": 10
+      }
+    }
+  ],
+  "layout": {
+    "title": {
+      "text": "Heart Disease Likelihood by Age",
+      "font": {
+        "size": 20,
+        "color": "black",
+        "family": "Arial",
+        "weight": "bold"
+      },
+      "x": 0.5,
+      "xanchor": "center"
+    },
+    "xaxis": {
+      "title": {
+        "text": "Age",
+        "font": {
+          "size": 14,
+          "weight": "bold"
+        }
+      },
+      "tickmode": "linear",
+      "dtick": 10,
+      "showline": true,
+      "linecolor": "black",
+      "linewidth": 2
+    },
+    "yaxis": {
+      "title": null,
+      "showticklabels": false
+    },
+    "plot_bgcolor": "white",
+    "bargap": 0.2
+  }
+}

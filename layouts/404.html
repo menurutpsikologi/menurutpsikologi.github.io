@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Halaman Tidak Ditemukan (404) - Nama Situs Anda</title>
+    <style>
+        :root {
+            /* Definisikan warna utama untuk kemudahan kustomisasi */
+            --primary-color: #3498db;
+            --primary-hover-color: #2980b9;
+            --secondary-color: #ecf0f1;
+            --secondary-hover-color: #bdc3c7;
+            --error-color: #e74c3c;
+            --text-color: #333;
+            --text-muted-color: #555;
+            --background-color: #f8f9fa; /* Sedikit lebih terang dari f8f8f8 */
+            --container-background: #ffffff;
+            --border-color: #dee2e6;
+            --shadow-color: rgba(0, 0, 0, 0.1);
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: var(--text-color);
+            text-align: center;
+            padding: 40px 20px;
+            background-color: var(--background-color);
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            min-height: 100vh;
+            box-sizing: border-box;
+            text-rendering: optimizeLegibility; /* Rendering teks lebih baik */
+            -webkit-font-smoothing: antialiased; /* Anti-aliasing di Webkit */
+            -moz-osx-font-smoothing: grayscale; /* Anti-aliasing di Firefox */
+        }
+
+        .container {
+            background-color: var(--container-background);
+            padding: 40px; /* Padding lebih besar */
+            border-radius: 12px; /* Border radius lebih besar */
+            box-shadow: 0 8px 25px var(--shadow-color); /* Bayangan lebih lembut */
+            max-width: 650px; /* Sedikit lebih lebar */
+            margin: 30px auto;
+            border: 1px solid var(--border-color); /* Tambahkan border halus */
+        }
+
+        h1 {
+            font-size: 80px; /* Sedikit lebih besar */
+            color: var(--error-color);
+            margin: 0 0 15px 0;
+            font-weight: 700; /* Lebih tebal */
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1); /* Tambahkan bayangan teks halus */
+        }
+
+        h2 {
+            font-size: 26px; /* Sedikit lebih besar */
+            color: var(--text-muted-color);
+            margin-bottom: 25px;
+            font-weight: 500; /* Sedang */
+        }
+
+        p {
+            font-size: 17px; /* Sedikit lebih besar */
+            line-height: 1.7; /* Tingkatkan line-height untuk keterbacaan */
+            margin-bottom: 20px; /* Sesuaikan margin */
+            color: var(--text-muted-color); /* Gunakan warna muted */
+        }
+
+        /* Pisahkan paragraf instruksi */
+        p.instruction {
+            margin-top: 30px;
+            font-weight: 500;
+            color: var(--text-color); /* Warna teks normal */
+        }
+
+        .actions {
+            margin-top: 30px; /* Beri jarak dari paragraf */
+            margin-bottom: 30px; /* Beri jarak ke form pencarian */
+        }
+
+        .actions a {
+            display: inline-block;
+            background-color: var(--primary-color);
+            color: #ffffff;
+            padding: 14px 30px; /* Padding lebih besar */
+            text-decoration: none;
+            border-radius: 8px; /* Border radius lebih besar */
+            font-weight: bold;
+            transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease; /* Transisi lebih lengkap */
+            margin: 5px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1); /* Bayangan halus pada tombol */
+        }
+
+        .actions a:hover,
+        .actions a:focus { /* Tambahkan :focus untuk aksesibilitas */
+            background-color: var(--primary-hover-color);
+            transform: translateY(-2px); /* Efek sedikit terangkat */
+            box-shadow: 0 4px 8px rgba(0,0,0,0.15); /* Bayangan lebih jelas saat hover */
+            outline: none; /* Hapus outline default, fokus ditangani visual */
+        }
+
+        .actions a:active {
+             transform: translateY(0); /* Kembali ke posisi normal saat diklik */
+             box-shadow: 0 2px 4px rgba(0,0,0,0.1); /* Bayangan normal saat aktif */
+        }
+
+        /* Style untuk tombol sekunder jika diperlukan */
+        .actions a.secondary {
+            background-color: var(--secondary-color);
+            color: var(--text-color);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+
+        .actions a.secondary:hover,
+        .actions a.secondary:focus {
+            background-color: var(--secondary-hover-color);
+            color: var(--text-color); /* Pastikan warna teks tetap */
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+
+         .actions a.secondary:active {
+             transform: translateY(0);
+             box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+         }
+
+        /* Optional: Logo (jika Anda menambahkannya) */
+        .logo {
+            max-width: 150px;
+            margin-bottom: 30px;
+        }
+
+        /* Search Form Styling */
+        .search-form {
+            margin-top: 35px;
+            display: flex; /* Gunakan flexbox untuk layout */
+            justify-content: center; /* Pusatkan item */
+            align-items: center; /* Sejajarkan item secara vertikal */
+            flex-wrap: wrap; /* Biarkan wrap di layar kecil */
+            gap: 10px; /* Jarak antar elemen flex */
+        }
+
+         .search-form p {
+             width: 100%; /* Ambil lebar penuh untuk paragraf */
+             margin-bottom: 15px; /* Jarak ke form input */
+             font-size: 16px;
+         }
+
+        .search-form input[type="search"] {
+            padding: 12px 15px; /* Sesuaikan padding */
+            border: 1px solid var(--border-color);
+            border-radius: 6px; /* Border radius sedikit lebih besar */
+            /* width: auto; Hapus width fixed, biarkan flexbox mengatur */
+            flex-grow: 1; /* Biarkan input tumbuh mengisi ruang */
+            max-width: 350px; /* Batasi lebar maksimum */
+            transition: border-color 0.3s ease, box-shadow 0.3s ease; /* Transisi saat fokus */
+            font-size: 16px; /* Sesuaikan ukuran font */
+        }
+
+        .search-form input[type="search"]:focus {
+            outline: none; /* Hapus outline default */
+            border-color: var(--primary-color); /* Ubah warna border saat fokus */
+            box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2); /* Tambahkan efek glow halus */
+        }
+
+        .search-form button {
+            padding: 12px 20px; /* Sesuaikan padding */
+            border: none;
+            background-color: var(--primary-color);
+            color: white;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 16px; /* Samakan ukuran font */
+            font-weight: bold;
+            transition: background-color 0.3s ease, transform 0.2s ease; /* Tambahkan transisi */
+            flex-shrink: 0; /* Jangan biarkan tombol menyusut */
+        }
+
+        .search-form button:hover,
+        .search-form button:focus {
+            background-color: var(--primary-hover-color);
+            transform: translateY(-1px); /* Sedikit terangkat */
+            outline: none;
+        }
+
+        .search-form button:active {
+            transform: translateY(0);
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .container {
+                 padding: 30px; /* Kurangi padding di tablet */
+            }
+             h1 {
+                font-size: 60px;
+             }
+            h2 {
+                 font-size: 22px;
+             }
+             p {
+                 font-size: 16px;
+             }
+        }
+
+        @media (max-width: 480px) {
+             body {
+                 padding: 20px 10px; /* Kurangi padding body di mobile */
+             }
+            .container {
+                padding: 25px 20px; /* Kurangi padding container di mobile */
+                margin: 20px auto;
+            }
+            h1 {
+                font-size: 48px; /* Ukuran H1 lebih kecil */
+            }
+            h2 {
+                font-size: 19px; /* Ukuran H2 lebih kecil */
+            }
+            p {
+                font-size: 15px; /* Ukuran paragraf lebih kecil */
+            }
+            .actions a {
+                padding: 12px 20px; /* Padding tombol lebih kecil */
+                font-size: 14px;
+                width: 100%; /* Buat tombol full-width agar mudah di tap */
+                margin: 8px 0; /* Sesuaikan margin untuk stacking */
+                box-sizing: border-box; /* Pastikan padding termasuk dalam width 100% */
+            }
+            .search-form {
+                 margin-top: 30px;
+            }
+             .search-form input[type="search"] {
+                 max-width: none; /* Biarkan input mengambil lebar yang tersedia */
+                 width: 100%; /* Full width di mobile */
+                 margin-bottom: 10px; /* Beri jarak jika tombol di bawahnya */
+                 box-sizing: border-box;
+             }
+             .search-form button {
+                 width: 100%; /* Full width di mobile */
+                 box-sizing: border-box;
+             }
+             .search-form {
+                 /* Pastikan flex direction kembali ke column jika diperlukan, tapi gap sudah cukup */
+                 /* flex-direction: column; */
+             }
+        }
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>404</h1>
+        <h2>Waduh, Halaman Tidak Ditemukan!</h2>
+        <p>
+            Maaf, sepertinya halaman yang Anda cari sudah tidak ada, dipindahkan, atau mungkin Anda salah mengetik alamatnya.
+        </p>
+        <p class="instruction"> Jangan khawatir, Anda bisa mencoba beberapa hal berikut:
+        </p>
+        <div class="actions">
+            <a href="/">Kembali ke Beranda</a>
+            </div>
+
+        <div class="search-form">
+             <p>Atau coba cari halaman yang Anda inginkan:</p>
+             <form action="/search/" method="GET" style="display: contents;"> <input type="search" id="search" name="s" placeholder="Ketik pencarian..." aria-label="Cari di situs" required> <button type="submit">Cari</button>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

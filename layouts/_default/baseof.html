@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content={{or .Params.description .Site.Params.description}}>
+    <meta name="google-site-verification" content="PJywcDTexSl5II3uB9zQl7_H_GpDnOrCjiSLpa2Qsi4" />
+    <meta name="msvalidate.01" content="4344DC965B6A1AE98835754A907E7AD7" />
+    <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+    <link rel="stylesheet" href="/styles/infinite-scroll.css">
+    <link rel="stylesheet" href="/styles/loading-screen.css">
+    <link rel="stylesheet" href="/styles/toc.css">
+    <link rel="icon" href="https://raw.githubusercontent.com/DaddyAnanta/DaddyAnanta.github.io/refs/heads/main/static/images/icon2.png" type="image/png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="/styles/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
+        rel="stylesheet">
+    {{ partialCached "analytics.html" . }}
+        
+        <title>{{ .Title }} | {{ .Site.Title }}</title>
+</head>
+
+<body>
+    <div id="loading-screen" style="position: fixed; width: 100%; height: 100%; background: #fdfbee; z-index: 9999; display: flex; flex-direction: column; justify-content: center; align-items: center;">
+        <div class="loadingio-spinner-pulse-nq4q5u6dq7r">
+            <div class="ldio-x2uulkbinbj">
+                <div></div><div></div><div></div>
+            </div>
+        </div>
+        <span class="loading-text">Loading <span id="progress-percent">0%</span></span>
+      </div>
+    {{ partial "navbar" . }}
+    
+    <div class="container">
+        <div class="topblog">
+        </div>
+        {{ block "main" . }} {{ end }}
+    </div>
+    {{ partial "footer" . }}
+    <script src="/js/search.js" async></script>
+    <script src="/js/coding_template.js" class="coding" async></script>
+    <script src="/js/accordion-panel.js"async></script>
+    <script src="/js/infinite-scroll.js"async></script>
+    <script src="/js/connection-dots.js"async></script>
+    <script src="/js/toc-scroll.js"async></script>
+    <script src="/js/loading-screen.js"></script>
+    <script async>
+        document.addEventListener('DOMContentLoaded', function() {
+          const paginationContainer = document.getElementById('customPagination') || document.querySelector('.pagination'); // Pilih berdasarkan ID atau class
+      
+          if (!paginationContainer) {
+            console.log('Kontainer paginasi tidak ditemukan. Pastikan ID atau class paginasi sudah benar.');
+            return;
+          }
+      
+          const paginationLinks = paginationContainer.querySelectorAll('a');
+      
+          paginationLinks.forEach(link => {
+            link.addEventListener('click', function(event) {
+              event.preventDefault(); // Mencegah link membuka halaman baru
+              const targetUrl = this.getAttribute('href');
+      
+              fetch(targetUrl)
+                .then(response => response.text())
+                .then(html => {
+                  const dummyElement = document.createElement('div');
+                  dummyElement.innerHTML = html;
+      
+                  const newListContainer = dummyElement.querySelector('#listContainer'); // Target kontainer daftar item
+                  if (newListContainer) {
+                    document.getElementById('listContainer').innerHTML = newListContainer.innerHTML; // Perbarui konten daftar
+      
+                    // Perbarui tampilan paginasi (opsional, jika Anda ingin paginasi juga diperbarui tanpa reload penuh)
+                    const newPaginationContainer = dummyElement.querySelector('#customPagination') || dummyElement.querySelector('.pagination');
+                    if (newPaginationContainer) {
+                        paginationContainer.innerHTML = newPaginationContainer.innerHTML;
+                        attachPaginationListeners(); // Pasang ulang event listener ke link paginasi yang baru
+                    } else {
+                        console.log('Kontainer paginasi baru tidak ditemukan dalam respons.');
+                    }
+      
+      
+                    // Scroll ke atas listContainer setelah konten diperbarui (opsional)
+                    document.getElementById('listContainer').scrollIntoView({ behavior: 'smooth' });
+      
+      
+                  } else {
+                    console.error('Kontainer daftar item baru tidak ditemukan dalam respons AJAX.');
+                    // Jika gagal, redirect ke URL asli (fallback untuk navigasi normal)
+                    window.location.href = targetUrl;
+                  }
+                })
+                .catch(error => {
+                  console.error('Error fetching page:', error);
+                  // Jika gagal fetch, redirect ke URL asli (fallback untuk navigasi normal)
+                  window.location.href = targetUrl;
+                });
+            });
+          });
+        });
+      
+        function attachPaginationListeners() {
+          const paginationContainer = document.getElementById('customPagination') || document.querySelector('.pagination');
+          if (!paginationContainer) return; // Kontainer paginasi mungkin tidak ada di halaman pertama
+      
+          const paginationLinks = paginationContainer.querySelectorAll('a');
+          paginationLinks.forEach(link => {
+            if (!link.dataset.listenerAttached) { // Cek agar event listener tidak dipasang ganda
+              link.addEventListener('click', handlePaginationClick);
+              link.dataset.listenerAttached = 'true'; // Tandai bahwa listener sudah dipasang
+            }
+          });
+        }
+      
+        function handlePaginationClick(event) {
+            event.preventDefault();
+            const targetUrl = this.getAttribute('href');
+      
+            fetch(targetUrl)
+                .then(response => response.text())
+                .then(html => {
+                    const dummyElement = document.createElement('div');
+                    dummyElement.innerHTML = html;
+      
+                    const newListContainer = dummyElement.querySelector('#listContainer');
+                    if (newListContainer) {
+                        document.getElementById('listContainer').innerHTML = newListContainer.innerHTML;
+      
+                        const newPaginationContainer = dummyElement.querySelector('#customPagination') || dummyElement.querySelector('.pagination');
+                        if (newPaginationContainer) {
+                            const oldPaginationContainer = document.getElementById('customPagination') || document.querySelector('.pagination');
+                            oldPaginationContainer.innerHTML = newPaginationContainer.innerHTML;
+                            attachPaginationListeners(); // Pasang ulang event listener
+                        }
+      
+                        document.getElementById('listContainer').scrollIntoView({ behavior: 'smooth' });
+                    } else {
+                        console.error('Kontainer daftar item baru tidak ditemukan dalam respons AJAX.');
+                        window.location.href = targetUrl;
+                    }
+                })
+                .catch(error => {
+                    console.error('Error fetching page:', error);
+                    window.location.href = targetUrl;
+                });
+        }
+      
+        // Panggil pertama kali setelah DOMContentLoaded untuk inisialisasi event listener
+        document.addEventListener('DOMContentLoaded', attachPaginationListeners);
+      
+      
+      </script>
+
+      <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/3.2.0/fuse.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/jquery.mark.min.js"></script>
+<script src="{{ "js/search.js" | absURL }}"></script>
+<script class="single-code" type="text/javascript"
+    src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+<script data-goatcounter="https://{{ .Site.Params.goatcounter }}.goatcounter.com/count" async
+  src="//gc.zgo.at/count.js"></script>
+<script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+<script>
+  AOS.init({
+    duration: 800,
+    once: true 
+  });
+</script>
+    <!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-VVR1FLD1GE"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-VVR1FLD1GE');
+</script>
+</body>
+
+</html>

@@ -1,0 +1,972 @@
+{{ define "main" }}
+<style>
+    /*  HEADER START  */
+
+    :root { /* Variabel CSS untuk kemudahan kustomisasi */
+        --header-gradient: linear-gradient(135deg, #211C84, #4D55CC, #7A73D1, #B5A8D5);
+        --text-color: #f9f9f9;
+        --button-bg: white;
+        --button-text: orange;
+        --button-hover-bg: #ffcc00;
+        --button-hover-text: white;
+        --wave-fill: #ffffff; /* Sesuaikan dengan warna section di bawahnya */
+    }
+
+    .header {
+        background: linear-gradient(135deg, #211C84, #4D55CC, #7A73D1, #B5A8D5);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        color: white;
+        padding: 20px;
+        overflow: hidden;
+        background-size: cover;
+        background-position: center;
+        width: 100%;
+        height: 100vh;
+        position: absolute;
+        left: 0;
+        right: 0;
+    }
+
+    /* Wave Effect */
+    .header::before {
+        content: "";
+        position: absolute;
+        bottom: -5px;
+        left: 0;
+        width: 100%;
+        height: 100px;
+
+        background-size: cover;
+    }
+
+    /* Atur wave */
+    .wave {
+        position: absolute;
+        bottom: -1px;
+        left: 0;
+        width: 100%;
+        overflow: hidden;
+        line-height: 0;
+        z-index: 4;
+    }
+    .wave svg {
+        display: block;
+        width: 100%;
+        height: auto;
+    }
+    .wave path {
+        fill: var(--wave-fill);
+    }
+    /* END wave */
+    .header-content {
+        width: 60%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        padding: 5% 2% 5% 5%;
+        color: var(--text-color);
+        z-index: 6;
+        box-sizing: border-box;
+        min-height: 300px;
+        text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
+    }
+
+    .header-content h1 {
+        font-size: clamp(2.5rem, 5vw, 3.75rem);
+        width: 100%;
+        margin-bottom: 1rem;
+        margin-top: 0;
+        line-height: 1.2;
+    }
+
+    .header-content p {
+        font-size: clamp(0.9rem, 1.5vw, 1rem);
+        width: 100%;
+        line-height: 1.6;
+        margin-bottom: 1.5rem;
+        max-width: 600px;
+    }
+
+    .header-start {
+        background-color: var(--button-bg);
+        width: auto;
+        padding: 0.8rem 1.8rem;
+        display: inline-flex;
+        justify-content: center;
+        align-items: center;
+        border-radius: 8px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        transition: all 0.3s ease;
+        cursor: pointer;
+        margin-top: 1rem;
+    }
+
+    .header-start a {
+        font-size: clamp(1rem, 2vw, 1.25rem);
+        color: var(--button-text);
+        text-decoration: none;
+        font-weight: bold;
+        display: flex;
+        align-items: center;
+        transition: color 0.3s ease;
+    }
+
+    .header-start .fas {
+        margin-left: 1rem;
+        font-size: clamp(1.1rem, 2.2vw, 1.35rem);
+        transition: transform 0.3s ease;
+    }
+
+    /* Efek Hover Button */
+    .header-start:hover {
+        background-color: var(--button-hover-bg);
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+        transform: translateY(-2px);
+    }
+    .header-start:hover a {
+        color: var(--button-hover-text);
+    }
+    .header-start:hover a .fas {
+        transform: translateX(5px);
+    }
+    /* End Hover Effect */
+
+    .connected-dot-container {
+        width: 40%;
+        /* Hapus background-color agar menyatu */
+        position: relative;
+        overflow: hidden;
+        min-height: 300px;
+        z-index: 3;
+    }
+
+    #canvas {
+        display: block;
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        top: 0;
+        left: 0;
+    }
+
+    /*  HEADER END  */
+
+
+    .panel{
+        margin-top: 20px;
+    }
+
+    /* Accordion Start   */
+    .accordion-tags_page {
+        background-color: #222;
+        padding: 15px;
+        border-radius: 8px;
+        color: #fff;
+        text-align: left;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    
+        /* --- NAIKKAN NILAI INI --- */
+        max-height: 125px; /* <-- CONTOH: Ganti dengan hasil perhitungan Anda */
+        overflow-y: auto;
+        box-sizing: border-box;
+    
+        /* Styling scrollbar (opsional) */
+        scrollbar-width: thin;
+        scrollbar-color: #555 #333;
+    }
+    
+    /* Styling scrollbar WebKit (opsional) */
+    .accordion-tags_page::-webkit-scrollbar { width: 8px; }
+    .accordion-tags_page::-webkit-scrollbar-track { background: #333; border-radius: 4px; }
+    .accordion-tags_page::-webkit-scrollbar-thumb { background-color: #555; border-radius: 4px; border: 2px solid #333; }
+    .accordion-tags_page::-webkit-scrollbar-thumb:hover { background-color: #777; }
+    
+    /* Accordion End   */
+
+
+    .listItemTexts { flex-grow: 1; }
+    .listItemTitle a { font-size: 1.1em; color: #333; text-decoration: none; font-weight: bold; }
+    .listItemTitle a:hover { text-decoration: underline; }
+    .listItemCategories { margin-top: 5px; font-size: 0.8em; }
+    .listItemCategories a { margin-right: 8px; padding: 2px 6px; border-radius: 3px; text-decoration: none; background-color: #eee; color: #555; }
+    .listItemCategories a.listItemCategory { background-color: #e0e0ff; }
+    .listItemCategories a.listItemtags { background-color: #ffe0e0; }
+    .listItemCategories a:hover { opacity: 0.8; }
+    
+    
+    /* --- Styling untuk Item ke-9 yang Terpotong --- */
+    
+    .listItem-partial-wrapper {
+        position: relative; /* Kunci untuk positioning overlay */
+        margin-top: 20px; /* Jaga jarak dari item ke-8 */
+        /* Optional: Beri sedikit indikasi visual berbeda jika perlu */
+        /* border: 1px solid #ddd; */
+    }
+    
+    .listItem-partial-container {
+        max-height: 100px;  /* <<< PENTING: Sesuaikan tinggi ini! */
+                          /* Tinggi ini menentukan seberapa banyak item ke-9 terlihat */
+        overflow: hidden; /* Menyembunyikan bagian item yang melebihi max-height */
+        /* Pastikan tidak ada border bawah dari .listItem di dalamnya */
+         border-bottom: none;
+    }
+    
+    /* Hapus padding bawah dari .listItem *di dalam* container partial */
+    .listItem-partial-container .listItem {
+        padding-bottom: 0;
+        border-bottom: none; /* Pastikan tidak ada border ganda */
+    }
+    
+    /* --- Styling untuk Tombol/Link "Lihat Lebih Banyak" --- */
+    
+    .list-see-more-overlay {
+        position: absolute; /* Overlay di atas item terpotong */
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 60px; /* Tinggi area overlay/tombol, sesuaikan */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        /* Gradien dari transparan ke warna background listContainer/body */
+        /* Ganti rgba(255, 255, 255, ...) jika background bukan putih */
+        background: linear-gradient(to bottom,
+            rgba(255, 255, 255, 0) 0%, /* Mulai transparan */
+            rgba(255, 255, 255, 0.8) 50%, /* Mulai solid */
+            rgba(255, 255, 255, 1) 100% /* Solid di bawah */
+        );
+         /* pointer-events: none; Biarkan event klik hanya pada tombol */
+    }
+    
+    .list-see-more-button {
+        padding: 10px 25px;
+        background-color: var(--button-text, orange); /* Warna mencolok, misal orange */
+        color: white;
+        text-decoration: none;
+        border-radius: 20px; /* Buat lebih bulat */
+        font-weight: bold;
+        font-size: 0.9em;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        /* pointer-events: auto; */ /* Aktifkan klik khusus untuk tombol */
+        transition: background-color 0.2s ease, transform 0.2s ease;
+        cursor: pointer;
+    }
+    
+    .list-see-more-button:hover {
+        background-color: darken(var(--button-text, orange), 10%); /* Sedikit lebih gelap saat hover */
+        transform: scale(1.05); /* Sedikit membesar */
+    }
+    
+
+
+    /* Include your provided CSS styles here */
+    .portofolio {
+        padding: 20px;
+        display: flex;
+    }
+
+    @keyframes ledBorderEffect {
+        0% {
+            border-image: linear-gradient(45deg, red, yellow, green, blue, purple);
+            border-image-slice: 1;
+        }
+
+        50% {
+            border-image: linear-gradient(45deg, purple, blue, green, yellow, red);
+            border-image-slice: 1;
+        }
+
+        100% {
+            border-image: linear-gradient(45deg, red, yellow, green, blue, purple);
+            border-image-slice: 1;
+        }
+    }
+
+
+    .portofolio section {
+        min-height: 100vh;
+        padding: 40px;
+        margin-top: 100px;
+
+        border: 0.3rem solid transparent;
+        border-radius: 15px;
+        animation: ledBorderEffect 10s infinite ease-in-out;
+        background: #f9f9f9;
+    }
+
+    .portofolio .home {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 8rem;
+        background-color: white;
+    }
+
+    .portofolio .home-content {
+        margin-top: -10%;
+        margin-right: 80px;
+    }
+
+    .portofolio .home-content h1 {
+        font-size: 3rem;
+        font-weight: 700;
+        line-height: 1.3;
+        font-family: 'Poppins', sans-serif;
+        color: #333;
+    }
+
+    .portofolio .home-content h1 span {
+        color: #ff6b6b;
+        font-weight: bold;
+    }
+
+    .portofolio .home-content .title {
+        margin-bottom: 10px;
+    }
+
+    .portofolio .home-content h3 {
+        font-size: 1.5rem;
+        font-family: 'Poppins', sans-serif;
+        color: #444;
+    }
+
+    .portofolio .home-content p {
+        font-size: 1rem;
+        text-indent: 40px;
+        text-align: justify;
+        color: #555;
+        line-height: 1.8;
+        margin-bottom: -40px;
+        margin-top: 1%;
+    }
+
+    .portofolio .home-img {
+        border-right: 0.3rem solid #ff6b6b;
+        padding: 50px;
+        margin-right: 20px;
+    }
+
+    .portofolio .home-img img {
+        position: relative;
+        width: 200px;
+        margin-left: 50px;
+        border-radius: 50%;
+        border: 0.3rem solid #ff6b6b;
+        cursor: pointer;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .portofolio .home-img img:hover {
+        transform: scale(1.05);
+        box-shadow: 0 4px 10px rgba(255, 107, 107, 0.4);
+    }
+
+    .portofolio .social-icons {
+        margin-left: 115px;
+        margin-bottom: 10px;
+    }
+
+    .portofolio .social-icons a {
+        display: flex;
+        padding: 10px;
+        justify-content: center;
+        align-items: center;
+        width: 4rem;
+        height: 4rem;
+        background-color: transparent;
+        border: 0.2rem solid #b74b4b;
+        font-size: 2rem;
+        border-radius: 50%;
+        margin-top: 10px;
+        transition: 0.3s ease;
+        color: #b74b4b;
+    }
+
+    .portofolio .social-icons a:hover {
+        color: black;
+        transform: scale(1.3) translateY(-5px);
+        background-color: #b74b4b;
+        box-shadow: 0 0 25px #b74b4b;
+    }
+
+    .portofolio .btn {
+        margin-left: 73px;
+        display: inline-block;
+        padding: 0.8rem 2rem;
+        background-color: #ff6b6b;
+        border-radius: 4rem;
+        font-size: 1.2rem;
+        font-family: 'Poppins', sans-serif;
+        color: white;
+        letter-spacing: 0.3rem;
+        font-weight: 600;
+        border: 2px solid #ff6b6b;
+        cursor: pointer;
+        transition: transform 0.3s ease, background-color 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .portofolio .btn:hover {
+        transform: scale(1.05);
+        background-color: #e84118;
+        color: white;
+        box-shadow: 0 0 25px #e84118;
+    }
+
+    .portofolio .typing-text {
+        font-size: 2rem;
+        font-weight: 600;
+        font-family: 'Poppins', sans-serif;
+        min-width: 280px;
+        color: #444;
+    }
+
+    .portofolio .typing-text h3 {
+        font-size: 2rem;
+        font-weight: 600;
+        min-width: 280px;
+        color: #444;
+    }
+
+    .portofolio .typing-text span {
+        position: relative;
+    }
+
+    .portofolio .typing-text span::before {
+        content: "Software Developer";
+        color: #ff6b6b;
+        animation: words 20s infinite;
+    }
+
+    @keyframes words {
+
+        0%,
+        25% {
+            content: "Digital Marketing Analytic Enthusiast";
+        }
+
+        26%,
+        50% {
+            content: "Content Writer on Medium";
+        }
+
+        51%,
+        100% {
+            content: "Data Analyst";
+        }
+    }
+
+    /* Media Query untuk max-width 1400px */
+    @media (max-width: 1400px) {
+        .list_h1 {
+            margin-top: 630px;
+        }
+        .list_h2 {
+            margin-top: 30px;
+        }
+    }
+
+    /* Media Query untuk max-width 1280px */
+    @media (max-width: 1280px) {
+        .home {
+            gap: 4rem;
+        }
+
+        .portofolio .home-content {
+            margin-top: 0%;
+        }
+
+        .portofolio .home-content h3 {
+            font-size: 1.5rem;
+        }
+
+        .portofolio .home-content h1 {
+            font-size: 2rem;
+        }
+
+        .list_h1 {
+            margin-top: 630px;
+        }
+        .list_h2 {
+            margin-top: 30px;
+        }
+    }
+
+    /* Media Query untuk max-width 1025px */
+    @media (max-width: 1025px) {
+        .home {
+            flex-direction: column;
+            margin: 5rem 4rem;
+        }
+
+        .portofolio .home-content {
+            margin-top: 10px;
+            margin-right: 0px;
+            margin-bottom: 60px;
+        }
+
+        .portofolio .btn {
+            margin-left: 73px;
+        }
+
+        .home .home-content h3 {
+            font-size: 2rem;
+            text-align: center;
+        }
+
+        .home-content h1 {
+            font-size: 3rem;
+            text-align: center;
+            margin-top: -130px;
+        }
+
+        .portofolio .home-img {
+            border-right: none;
+        }
+
+        .home-img img {
+            width: 70vw;
+            margin-top: 200px;
+        }
+
+        .portofolio section {
+            margin-top: 100px;
+            padding: 20px;
+            border: none;
+        }
+
+        /* HEADER */
+        .list_h1 {
+            margin-top: 630px;
+        }
+        .list_h2 {
+            margin-top: 30px;
+        }
+
+        .header-content h1 {
+            text-align: center;
+            font-size: 30px;
+            width: 60%;
+        }
+
+
+
+        .header-content p {
+            font-size: 14px;
+            width: 60%;
+            
+            align-items: center;
+        }
+
+        .header-start {
+            width: 60%;
+            height: 60px;
+            border-radius: 8px;
+            /* Sudut membulat */
+            margin-top: 20px;
+        }
+
+        .header-start a {
+            font-size: 15px;
+        }
+
+        .header-start .fas {
+            margin-left: 15px;
+            /* Memberikan jarak antara teks dan ikon panah */
+            font-size: 28px;
+            /* Ukuran panah sedikit lebih besar */
+        }
+
+    }
+
+    @media (max-width: 728px) {
+
+        .header-content{
+            margin-top: -20%;
+        }
+        .list_h1_porto {
+            margin-top: 80px;
+        }
+
+        .list_h1 {
+            margin-top: 770px;
+            z-index: 5;
+        }
+        .list_h1 h1 {
+            font-size: 30px;
+            margin-top: 0px;
+        }
+        .list_h2 {
+            margin-top: 70px;
+            z-index: 5;
+        }
+
+
+        .portofolio section {
+
+            min-height: 100vh;
+            max-width: 28vh;
+            align-items: center;
+            max-height: 200vh;
+            padding: 40px;
+            margin-top: 300px;
+            margin-bottom: 200px;
+            background: #f9f9f9;
+        }
+
+    }
+
+    @media (max-width: 650px) {
+
+
+
+
+        .header-content {
+            width: 500px;
+            margin-left: 7%;
+        }
+
+        .header-content h1 {
+            font-size: 45px;
+        }
+
+        .header-content p {
+            font-size: 12px;
+            text-align: justify;
+        }
+
+        .connected-dot-container {
+            width: 50%;
+            margin-top: -50px;
+            height: 50%;
+            /* Hapus background-color agar menyatu */
+            position: relative;
+            overflow: hidden;
+            min-height: 300px;
+            z-index: 3;
+        }
+
+    }
+</style>
+<div class="header">
+    <div class="header-content">
+        
+        <h1>Selamat Datang!</h1>
+        <p>Di pusat informasi psikologi, tempat Anda memahami cara kerja pikiran, emosi, dan perilaku manusia secara mendalam.</p>
+        <div class="header-start">
+            <a href="/#list_h1" class="accordion-link" onclick="closeAccordion(event)">Mulai Jelajahi  <i class="fas fa-arrow-right"></i></a>
+        </div>
+    </div>
+    <div class="connected-dot-container"> <canvas id="canvas"></canvas>
+    </div>
+    <div class="wave">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
+            <path fill="#ffffff" fill-opacity="1"
+                  d="M0,64L80,64C160,64,320,64,480,101.3C640,139,800,213,960,202.7C1120,192,1280,96,1360,48L1440,0L1440,320L1360,320C1280,320,1120,320,960,320C800,320,640,320,480,320C320,320,160,320,80,320L0,320Z">
+            </path>
+        </svg>
+    </div>
+</div>
+
+
+
+<div class="accordion" id="cart-accordion" data-aos="fade-up">
+    <div class="searchButton_accordeon">
+        <form action="/search/" method="GET">
+            <input type="text" id="search" name="s" placeholder="Search" />
+            <button type="submit" style="display: none;"></button>
+            <button type="submit" class="btn btn-primary">
+                <i class="fas fa-search" aria-hidden="true"></i>
+            </button>
+        </form>
+    </div>
+    <div class="accordion-item">
+     <!--           <a href="/#list_h1" class="accordion-link" onclick="closeAccordion(event)">PORTOFOLIO</a>
+        <a href="https://github.com/DaddyAnanta/" target="_blank" rel="noopener noreferrer">GITHUB</a>
+        <a href="https://medium.com/@daddyananta" target="_blank" rel="noopener noreferrer">MEDIUM</a>-->
+    </div>
+    <button class="accordion-button" onclick="togglePanel(this)">
+        Category
+        <span class="accordion-icon">&#9660;</span> <!-- Gunakan simbol Unicode -->
+    </button>
+
+    <div class="panel">
+        <div class="accordion-category_page">
+            {{ range $.Site.Taxonomies.categories.ByCount }}
+            <a class="accordion-category-link" href="/categories/{{ .Name }}">
+                <span class="accordion-category-name">{{ .Name | title }}</span>
+            </a>
+            {{ end }}
+        </div>
+
+    </div>
+    <button class="accordion-button" onclick="togglePanel(this)">
+        Tags
+        <span class="accordion-icon">&#9660;</span> <!-- Gunakan simbol Unicode -->
+    </button>
+
+    <div class="panel">
+        <div class="accordion-tags_page">
+            {{ range $.Site.Taxonomies.tags.ByCount }}
+            <a class="accordion-category-link" href="/tags/{{ .Name }}">
+                <span class="accordion-category-name">{{ .Name | title }}</span>
+            </a>
+            {{ end }}
+        </div>
+    </div>
+</div>
+
+
+
+<div class="blog-content">
+    <div class="list_h1" id="list_h1" data-aos="fade-up">
+        <h1>Case</h1>
+    </div>
+
+    <div class="listContainer" id="listContainer" data-aos="fade-up" data-aos-delay="100">
+        {{ $CasePages := where .Site.RegularPages "Params.categories" "intersect" (slice "Case") }}
+        {{ $totalCasePages := len $CasePages }}
+
+        {{ range $index, $page := $CasePages }}
+            {{ if lt $index 8 }}
+                {{/* Item 1-8: Tampilkan Penuh */}}
+                <div class="listItem">
+                    <img src="{{ .Params.image }}" alt="{{ .Title }}" class="listItemImage">
+                    <div class="listItemTexts">
+                        <h1 class="listItemTitle">
+                            <a href="{{ .Permalink }}">{{ .Title }}</a>
+                        </h1>
+                        <div class="listItemCategories">
+                            {{ with .Params.categories }}
+                                {{ range . }}
+                                    <a class="listItemCategory" href="{{ "/categories/" | relLangURL }}{{ . | urlize }}">{{ . }}</a>
+                                {{ end }}
+                            {{ end }}
+                            {{ with .Params.tags }}
+                                {{ range . }}
+                                    <a class="listItemtags" href="{{ "/tags/" | relLangURL }}{{ . | urlize }}">{{ . }}</a>
+                                {{ end }}
+                            {{ end }}
+                        </div>
+                    </div>
+                </div>
+            {{ else if eq $index 8 }}
+                <div class="listItem-partial-wrapper"> 
+                        <div class="listItem-partial-container">
+                                 <img src="{{ .Params.image }}" alt="{{ .Title }}" class="listItemImage">
+                                <div class="listItemTexts">
+                                    <h1 class="listItemTitle">
+                                        <a href="{{ .Permalink }}">{{ .Title }}</a>
+                                    </h1>
+                                    <div class="listItemCategories">
+                                         {{ with .Params.categories }}
+                                            {{ range . }}
+                                                <a class="listItemCategory" href="{{ "/categories/" | relLangURL }}{{ . | urlize }}">{{ . }}</a>
+                                            {{ end }}
+                                        {{ end }}
+                                        {{ with .Params.tags }}
+                                            {{ range . }}
+                                                <a class="listItemtags" href="{{ "/tags/" | relLangURL }}{{ . | urlize }}">{{ . }}</a>
+                                            {{ end }}
+                                        {{ end }}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="list-see-more-overlay">
+                                <a href="{{ "/categories/case/" | relLangURL }}" class="list-see-more-button">Lihat Lebih Banyak</a>
+                            </div>
+                        </div>
+
+                    </div>
+                 {{ break }} 
+            {{ end }}
+        {{ end }}
+
+        {{ if eq $totalCasePages 0 }}
+            <p>Belum ada postingan di kategori Case.</p>
+        {{ end }}
+
+    </div>
+</div>
+
+
+
+
+<div class="blog-content">
+    <div class="list_h2" id="list_h1" data-aos="fade-up">
+        <h1>Abnormal</h1>
+    </div>
+
+    <div class="listContainer" id="listContainer" data-aos="fade-up" data-aos-delay="100">
+        {{ $abnormalPages := where .Site.RegularPages "Params.categories" "intersect" (slice "Absonram") }}
+        {{ $totalabnormalPages := len $abnormalPages }}
+
+        {{ range $index, $page := $abnormalPages }}
+            {{ if lt $index 8 }}
+                {{/* Item 1-8: Tampilkan Penuh */}}
+                <div class="listItem">
+                    <img src="{{ .Params.image }}" alt="{{ .Title }}" class="listItemImage">
+                    <div class="listItemTexts">
+                        <h1 class="listItemTitle">
+                            <a href="{{ .Permalink }}">{{ .Title }}</a>
+                        </h1>
+                        <div class="listItemCategories">
+                            {{ with .Params.categories }}
+                                {{ range . }}
+                                    <a class="listItemCategory" href="{{ "/categories/" | relLangURL }}{{ . | urlize }}">{{ . }}</a>
+                                {{ end }}
+                            {{ end }}
+                            {{ with .Params.tags }}
+                                {{ range . }}
+                                    <a class="listItemtags" href="{{ "/tags/" | relLangURL }}{{ . | urlize }}">{{ . }}</a>
+                                {{ end }}
+                            {{ end }}
+                        </div>
+                    </div>
+                </div>
+            {{ else if eq $index 8 }}
+                {{/* Item ke-9 (index 8): Tampilkan sebagian */}}
+                <div class="listItem-partial-wrapper"> {{/* Wrapper untuk item ke-9 dan link */}}
+                        <div class="listItem-partial-container"> {{/* Container yang akan dipotong */}}
+                            <div class="listItem"> {{/* Render item ke-9 di dalamnya */}}
+                                 <img src="{{ .Params.image }}" alt="{{ .Title }}" class="listItemImage">
+                                <div class="listItemTexts">
+                                    <h1 class="listItemTitle">
+                                        <a href="{{ .Permalink }}">{{ .Title }}</a>
+                                    </h1>
+                                    <div class="listItemCategories">
+                                         {{ with .Params.categories }}
+                                            {{ range . }}
+                                                <a class="listItemCategory" href="{{ "/categories/" | relLangURL }}{{ . | urlize }}">{{ . }}</a>
+                                            {{ end }}
+                                        {{ end }}
+                                        {{ with .Params.tags }}
+                                            {{ range . }}
+                                                <a class="listItemtags" href="{{ "/tags/" | relLangURL }}{{ . | urlize }}">{{ . }}</a>
+                                            {{ end }}
+                                        {{ end }}
+                                    </div>
+                                </div>
+                            </div>
+                                                {{/* Link "Lihat Lebih Banyak" ditempatkan di bawah/overlay */}}
+                        <div class="list-see-more-overlay">
+                            <a href="{{ "/categories/abnormal/" | relLangURL }}" class="list-see-more-button">Lihat Lebih Banyak</a>
+                        </div>
+                        </div>
+
+                    </div>
+                 {{/* Hentikan loop setelah item ke-9 diproses */}}
+                 {{ break }} {{/* Atau biarkan selesai jika break tidak didukung/diinginkan */}}
+            {{ end }}
+        {{ end }}
+
+        {{ if eq $totalabnormalPages 0 }}
+            <p>Belum ada postingan di kategori Abnormal.</p>
+        {{ end }}
+         {{/* Jika jumlah post <= 8, pastikan tidak ada elemen sisa */}}
+         {{/* Kode di atas sudah menangani ini */}}
+
+    </div>
+</div>
+
+<div class="blog-content">
+    <div class="list_h2" id="list_h1" data-aos="fade-up">
+        <h1>Analisis Data</h1>
+    </div>
+
+    <div class="listContainer" id="listContainer" data-aos="fade-up" data-aos-delay="100">
+        {{ $portofolioPages := where .Site.RegularPages "Params.categories" "intersect" (slice "Portofolio") }}
+        {{ $totalportofolioPages := len $portofolioPages }}
+
+        {{ range $index, $page := $portofolioPages }}
+            {{ if lt $index 8 }}
+                {{/* Item 1-8: Tampilkan Penuh */}}
+                <div class="listItem">
+                    <img src="{{ .Params.image }}" alt="{{ .Title }}" class="listItemImage">
+                    <div class="listItemTexts">
+                        <h1 class="listItemTitle">
+                            <a href="{{ .Permalink }}">{{ .Title }}</a>
+                        </h1>
+                        <div class="listItemCategories">
+                            {{ with .Params.categories }}
+                                {{ range . }}
+                                    <a class="listItemCategory" href="{{ "/categories/" | relLangURL }}{{ . | urlize }}">{{ . }}</a>
+                                {{ end }}
+                            {{ end }}
+                            {{ with .Params.tags }}
+                                {{ range . }}
+                                    <a class="listItemtags" href="{{ "/tags/" | relLangURL }}{{ . | urlize }}">{{ . }}</a>
+                                {{ end }}
+                            {{ end }}
+                        </div>
+                    </div>
+                </div>
+            {{ else if eq $index 8 }}
+                {{/* Item ke-9 (index 8): Tampilkan sebagian */}}
+                <div class="listItem-partial-wrapper"> {{/* Wrapper untuk item ke-9 dan link */}}
+                        <div class="listItem-partial-container"> {{/* Container yang akan dipotong */}}
+                            <div class="listItem"> {{/* Render item ke-9 di dalamnya */}}
+                                 <img src="{{ .Params.image }}" alt="{{ .Title }}" class="listItemImage">
+                                <div class="listItemTexts">
+                                    <h1 class="listItemTitle">
+                                        <a href="{{ .Permalink }}">{{ .Title }}</a>
+                                    </h1>
+                                    <div class="listItemCategories">
+                                         {{ with .Params.categories }}
+                                            {{ range . }}
+                                                <a class="listItemCategory" href="{{ "/categories/" | relLangURL }}{{ . | urlize }}">{{ . }}</a>
+                                            {{ end }}
+                                        {{ end }}
+                                        {{ with .Params.tags }}
+                                            {{ range . }}
+                                                <a class="listItemtags" href="{{ "/tags/" | relLangURL }}{{ . | urlize }}">{{ . }}</a>
+                                            {{ end }}
+                                        {{ end }}
+                                    </div>
+                                </div>
+                            </div>
+                                                {{/* Link "Lihat Lebih Banyak" ditempatkan di bawah/overlay */}}
+                        <div class="list-see-more-overlay">
+                            <a href="{{ "/categories/portofolio/" | relLangURL }}" class="list-see-more-button">Lihat Lebih Banyak</a>
+                        </div>
+                        </div>
+
+                    </div>
+                 {{/* Hentikan loop setelah item ke-9 diproses */}}
+                 {{ break }} {{/* Atau biarkan selesai jika break tidak didukung/diinginkan */}}
+            {{ end }}
+        {{ end }}
+
+        {{ if eq $totalportofolioPages 0 }}
+            <p>Belum ada postingan di kategori Analisis Data.</p>
+        {{ end }}
+         {{/* Jika jumlah post <= 8, pastikan tidak ada elemen sisa */}}
+         {{/* Kode di atas sudah menangani ini */}}
+
+    </div>
+</div>
+
+
+<!--{{ partial "custom_pagination.html" . }}-->
+
+<div class="list_h2" id="list_h1" data-aos="fade-up">
+    <h1>About This Site</h1>
+</div>
+
+<div class="scroller" data-speed="fast">
+    <ul class="tag-list scroller__inner">
+      <li>Clinical Psychology</li>
+      <li>Forensic Psychology</li>
+      <li>Social Psychology</li>
+      <li>Human Behavior</li>
+      <li>Mental Health</li>
+      <li>Cognitive Psychology</li>
+      <li>Theraphy</li>
+      <li>Motivation</li>
+    </ul>
+  </div>
+{{ end }}

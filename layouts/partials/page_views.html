@@ -1,0 +1,49 @@
+<span class="single-meta-item" style="display: flex; align-items: center;">
+    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+        stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-activity">
+        <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+        <circle cx="12" cy="12" r="3"></circle>
+    </svg>
+    &nbsp;<span id="page-views-{{ .File.UniqueID }}" title="{{ i18n " article.page_views" }}">
+        ....
+    </span><span style="margin-left: 5px; margin-right: 20px;">Views</span>
+</span>
+
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    var uniqueID = "page-views-{{ .File.UniqueID }}"; 
+    var pageViewElement = document.getElementById(uniqueID);
+
+    if (!pageViewElement) {
+        console.error("Element not found:", uniqueID);
+        return;
+    }
+
+    var pageViewUrl = "https://{{ .Site.Params.goatcounter }}.goatcounter.com/counter/" + 
+        encodeURIComponent('{{ .RelPermalink }}'.replace(/(\/)?$/, "")) + ".json";
+
+    console.log("Fetching page views from:", pageViewUrl);
+
+    var r = new XMLHttpRequest();
+    r.addEventListener("load", function () {
+        try {
+            var data = JSON.parse(this.responseText);
+            console.log("GoatCounter response:", data);
+            
+            if (pageViewElement) { 
+                pageViewElement.innerText = data.count_unique + " {{ i18n "article.page_views" }}";
+            } else {
+                console.error("Element still not found after request:", uniqueID);
+            }
+
+        } catch (error) {
+            console.error("Error parsing page views:", error);
+        }
+    });
+
+    r.open("GET", pageViewUrl);
+    r.send();
+});
+</script>
+

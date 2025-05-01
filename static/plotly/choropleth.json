@@ -1,0 +1,29 @@
+{
+  "data": [
+    {
+      "type": "choropleth",
+      "colorscale": "Viridis",
+      "reversescale": true,
+      "z": [10, 20, 30, 40, 50],
+      "locations": ["USA", "CAN", "BRA", "AUS", "RUS"],
+      "locationmode": "country names",
+      "colorbar": {
+        "title": "Data Value"
+      }
+    }
+  ],
+  "layout": {
+    "title": "Peta Choropleth Contoh",
+    "geo": {
+      "scope": "world",
+      "projection": {
+        "type": "mercator"
+      },
+      "showland": true,
+      "landcolor": "rgb(212, 212, 212)",
+      "subunitwidth": 1,
+      "countrywidth": 1
+    }
+  }
+}
+

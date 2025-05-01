@@ -1,0 +1,23 @@
+{
+  "data": [
+    {
+      "type": "scatter",
+      "mode": "lines+markers",
+      "x": [1, 2, 3, 4, 5],
+      "y": [10, 15, 13, 17, 22],
+      "marker": {
+        "color": "red"
+      }
+    }
+  ],
+  "layout": {
+    "title": "Contoh Grafik Line",
+    "xaxis": {
+      "title": "Sumbu X"
+    },
+    "yaxis": {
+      "title": "Sumbu Y"
+    }
+  }
+}
+

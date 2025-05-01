@@ -1,0 +1,31 @@
+{
+  "data": [
+    {
+      "type": "scatter3d",
+      "mode": "markers",
+      "x": [1, 2, 3, 4, 5],
+      "y": [10, 15, 13, 17, 22],
+      "z": [5, 7, 8, 6, 9],
+      "marker": {
+        "size": 8,
+        "color": "rgb(255,0,0)",
+        "opacity": 0.8
+      }
+    }
+  ],
+  "layout": {
+    "title": "Grafik Scatter 3D Contoh",
+    "scene": {
+      "xaxis": {
+        "title": "Sumbu X"
+      },
+      "yaxis": {
+        "title": "Sumbu Y"
+      },
+      "zaxis": {
+        "title": "Sumbu Z"
+      }
+    }
+  }
+}
+

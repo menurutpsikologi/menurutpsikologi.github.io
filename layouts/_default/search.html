@@ -1,0 +1,82 @@
+{{ define "footerfiles" }}
+{{ end }}
+{{ define "main" }}
+<div class="accordion" id="cart-accordion">
+    <div class="accordion-item">
+        <a href="/#list_h1">PORTOFOLIO</a>
+        <a href="https://github.com/DaddyAnanta1/" target="_blank" rel="noopener noreferrer">GITHUB</a>
+        <a href="https://medium.com/@daddyananta" target="_blank" rel="noopener noreferrer">MEDIUM</a>
+    </div>
+    <button class="accordion-button" onclick="togglePanel(this)">
+        Category
+        <span class="accordion-icon">&#9660;</span> <!-- Gunakan simbol Unicode -->
+    </button>
+
+    <div class="panel">
+        <div class="accordion-category_page">
+            {{ range $.Site.Taxonomies.categories.ByCount }}
+            <a class="accordion-category-link" href="/categories/{{ .Name }}">
+                <span class="accordion-category-name">{{ .Name | title }}</span>
+            </a>
+            {{ end }}
+        </div>
+
+    </div>
+</div>
+
+<section class="resume-section p-3 p-lg-5 d-flex flex-column">
+    <div class="search-container">
+        <h1>Search</h1>
+        <form action="{{ "search" | absURL }}" method="get" role="search" class="search-form">
+            <div class="input-group">
+                <input type="search" id="search-query" name="s" placeholder="Search..." required>
+                <button type="submit" class="btn btn-primary">
+                    <i class="fas fa-search" aria-hidden="true"></i>
+                </button>
+            </div>
+        </form>
+    </div>
+    <div id="search-results"></div> <!-- Hasil pencarian muncul di sini -->
+    <div id="pagination-container"></div> <!-- Kontainer pagination -->
+</section>
+<!-- this template is sucked in by search.js and appended to the search-results div above. So editing here will adjust style -->
+<script id="search-result-template" type="text/x-js-template">
+    <div class="search-result-item" style="margin-bottom: 30px; display: flex; align-items: center; border-bottom: 1px solid #eee; padding: 20px; border: 2px solid blue;">
+       ${ isset image }<img src="${image}" class="search-result-image"> ${ end }
+        <div>
+            <h4 style="margin-bottom: 10px;">
+                <a href="${link}" style="display: block; font-size: 1.2em; margin-top: -15px; font-weight: 600; color: #333; text-decoration: none; overflow: hidden; text-overflow: ellipsis; display: -webkit-box; -webkit-line-clamp: 1; -webkit-box-orient: vertical;">${title}</a>
+            </h4>
+            <div id="summary-${key}" style="color: #555; line-height: 1.5; margin-bottom: 5px;">${snippet}</div>
+            <div style="display: flex; font-size: 0.9em; color: #777;">
+                ${ isset categories }<div style="margin-right: 20px;">Category: ${categories}</div> ${ end }
+                ${ isset tags }<div>Tags: ${tags}</div> ${ end }
+            </div>
+        </div>
+    </div>
+    
+  </script>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const queryString = window.location.search;
+    const urlParams = new URLSearchParams(queryString);
+    const searchQuery = urlParams.get('s'); // Dapatkan kata kunci dari URL
+    const searchInput = document.getElementById('search-query'); // Dapatkan elemen input
+
+    // Periksa apakah kata kunci ada di URL dan elemen input ditemukan
+    if (searchQuery && searchInput) {
+      searchInput.value = searchQuery;
+      if (typeof $ === 'function') {
+         $(searchInput).trigger('input');
+      } else {
+         // Alternatif jika jQuery belum tentu ada di sini (menggunakan JS murni)
+         console.warn("jQuery not found for triggering input event, using native dispatchEvent.");
+         searchInput.dispatchEvent(new Event('input', { bubbles: true, cancelable: true }));
+      }
+
+      console.log(`Search input pre-filled with "${searchQuery}" and input event triggered.`);
+    }
+  });
+</script>
+{{ end }}

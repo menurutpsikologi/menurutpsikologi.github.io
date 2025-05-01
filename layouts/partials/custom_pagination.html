@@ -1,0 +1,125 @@
+{{ if or .Paginator.HasPrev .Paginator.HasNext }}
+
+<style>
+  /* ===== Styling untuk Container Paginasi (pagination) ===== */
+  .pagination {
+    display: flex;
+    justify-content: center;
+    /* Pusatkan paginasi */
+    align-items: center;
+    /* Pusatkan item vertikal */
+    padding: 1.5em 2em;
+    background-color: #fff;
+    /* Latar belakang putih atau warna terang lain */
+    color: black;
+    border-top: 1px solid #eee;
+    /* Garis pemisah di atas paginasi */
+    margin-top: 2em;
+    /* Spasi atas dari konten di atasnya */
+    border-radius: 0 0 8px 8px;
+    /* Rounded bottom corners jika container daftar juga rounded top corners */
+  }
+
+  /* ===== Styling untuk Item Paginasi (pagination-item & pagination-number) ===== */
+  .pagination-item,
+  .pagination-number {
+    display: inline-flex;
+    /* Agar bisa diatur tinggi dan lebarnya */
+    justify-content: center;
+    align-items: center;
+    min-width: 40px;
+    /* Lebar minimum item paginasi */
+    height: 40px;
+    /* Tinggi item paginasi */
+    margin: 0 0.5em;
+    /* Spasi horizontal antar item */
+    border-radius: 6px;
+    /* Sudut membulat */
+    font-size: 1em;
+    font-weight: 500;
+    /* Sedikit bold */
+    color: white;
+    /* Warna teks item paginasi */
+    background-color: grey;
+    /* Latar belakang item paginasi */
+    transition: background-color 0.3s ease, color 0.3s ease;
+    /* Transisi hover effect */
+    text-decoration: none;
+    /* Pastikan tidak ada garis bawah dari link */
+  }
+
+  .pagination-item:hover {
+    background-color: #e0e0e0;
+    /* Warna latar belakang saat hover */
+    color: black;
+    /* Warna teks saat hover */
+  }
+
+  /* Styling khusus untuk link 'Newer' dan 'Older' */
+  .pagination-newer,
+  .pagination-older {
+    padding: 0 1.2em;
+    /* Padding horizontal lebih lebar untuk teks 'Newer'/'Older' */
+  }
+
+  /* Styling untuk angka halaman saat ini (pagination-number) */
+  .pagination-number {
+    background-color: transparent;
+    /* Hilangkan latar belakang untuk angka halaman saat ini */
+    color: black;
+    /* Warna teks angka halaman saat ini */
+    font-weight: normal;
+    /* Berat font normal untuk angka halaman */
+    pointer-events: none;
+    /* Non-interactive, bukan link */
+  }
+
+
+  /* ===== Styling untuk Simbol Panah (opsional, jika Anda ingin mengganti simbol default) ===== */
+  .pagination-item span[aria-hidden="true"] {
+    display: inline-block;
+    margin: 0;
+    /* Hilangkan margin default */
+    font-size: 1em;
+    /* Ukuran simbol panah */
+    line-height: 1;
+    /* Pastikan simbol panah sejajar vertikal */
+  }
+
+  @media (max-width: 728px) {
+    .pagination {
+      flex-direction: column;
+      /* Mengubah arah flex menjadi kolom */
+      align-items: center;
+      z-index: 5;
+      /* Memastikan item di tengah secara horizontal */
+    }
+
+    .pagination-item,
+    .pagination-number {
+      width: 100%;
+      /* Membuat item mengisi lebar penuh */
+      text-align: center;
+      /* Menengahkan teks */
+    }
+
+    .pagination-item {
+      margin: 5px 0;
+    }
+  }
+</style>
+
+<div class="pagination" id="customPagination">
+  {{ if .Paginator.HasPrev }}
+  <a class="pagination-item pagination-newer" href="{{ .Paginator.Prev.URL }}">
+    <span class="fas fa-arrow-left"></span>Newer
+  </a>
+  {{ end }}
+  <span class="pagination-number">Halaman {{ .Paginator.PageNumber }} dari {{ .Paginator.TotalPages }}</span>
+  {{ if .Paginator.HasNext }}
+  <a class="pagination-item pagination-older" href="{{ .Paginator.Next.URL }}">
+    Older <span class="fas fa-arrow-right"></span>
+  </a>
+  {{ end }}
+</div>
+{{ end }}

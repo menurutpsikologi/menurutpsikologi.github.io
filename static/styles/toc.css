@@ -1,0 +1,194 @@
+/* Container utama untuk layout halaman */
+.page-wrapper {
+    display: flex;
+    flex-direction: row; 
+    align-items: flex-start;
+    gap: 2em;
+    position: relative; 
+  }
+  
+  /* Sidebar yang berisi ToC */
+  .toc-sidebar {
+    width: 250px; 
+    /* Hapus margin-left: -4%; */
+    position: sticky;
+    top: 20px; 
+    max-height: calc(100vh - 40px); 
+    overflow-y: auto; 
+    align-self: flex-start;
+  
+    
+    border-right: 1px solid #ddd; 
+    padding: 15px;
+  }
+  
+  /* Kontainer Navigasi ToC di dalam Sidebar */
+  #TableOfContents {
+    margin-left: -10%;
+  }
+
+
+  
+  /* Styling Judul ToC (Opsional, tambahkan jika ada judul seperti <strong>) */
+  #TableOfContents strong {
+    display: block;
+    margin-bottom: 1em;
+    font-weight: bold;
+    
+  }
+  
+  /* Styling dasar list ToC */
+  #TableOfContents ul {
+
+    list-style: none;
+    padding-left: 0; /* Hapus default padding */
+    margin-top: 0.5em;
+    width: 200px;
+    margin-bottom: 0; /* Hapus margin bawah default ul */
+    /* === PERUBAHAN: Hapus border-right dari sini === */
+    /* border-right: 1px solid #000; <-- HAPUS INI */
+  }
+  
+  /* Styling nested list (sub-heading) */
+  #TableOfContents ul ul {
+    padding-left: 1em; /* Indentasi untuk sub-heading */
+    margin-top: 0.4em; /* Sedikit jarak atas untuk nested list */
+  }
+  
+  /* Styling item list */
+  #TableOfContents li {
+    margin-bottom: 0.3em;
+  }
+  
+  /* Styling link ToC */
+  #TableOfContents a {
+    text-decoration: none;
+    color: #555; /* Warna link default */
+    display: block; 
+    padding: 0.2em 0;
+    border-left: 3px solid transparent; /* Siapkan tempat untuk border aktif */
+    transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out; /* Transisi halus */
+  }
+  
+  /* Efek Hover pada link ToC */
+  #TableOfContents a:hover {
+    color: #000;
+    background-color: #f0f0f0; /* Latar belakang lembut saat hover */
+  }
+  
+  #TableOfContents a.active {
+    color: darkorange;           /* GANTI warna teks menjadi oranye */
+    font-weight: 600;            /* Biarkan tebal agar menonjol */
+    
+    background-color: transparent; /* Atau hapus latar belakang sama sekali */
+  }
+
+  .TableOfContents{
+    display: none; /* Sembunyikan ToC */
+  }
+
+
+/* Tambahan code untuk Excel */
+
+
+  
+  
+  /* Responsiveness: Sembunyikan ToC di layar kecil */
+  @media (max-width: 1024px) { /* Sesuaikan breakpoint ini jika perlu */
+
+    .TableOfContents{
+        display: grid; /* Sembunyikan ToC */
+      }
+
+    /* TABLE OF CONTENT START */
+.TableOfContents {
+    background: #ffffff; /* Latar belakang putih */
+    color: #333; /* Warna teks lebih gelap untuk kontras */
+    padding: 15px;
+    border-radius: 10px;
+    text-align: justify;
+    width: 70%;
+    padding: 20px;
+    margin-left: 10%;
+  }
+  
+  .TableOfContents li   {
+    padding-left: 1em; /* Indentasi untuk sub-heading */
+    margin-top: 0.4em; /* Sedikit jarak atas untuk nested list */
+  }
+  
+  .TableOfContents li  li {
+    padding-left: 2em; /* Indentasi untuk sub-heading */
+    text-align: justify;
+    margin-top: 0.4em; /* Sedikit jarak atas untuk nested list */
+  }
+  
+  .toc-title {
+    font-size: 18px;
+    font-weight: bold;
+    text-align: center;
+    
+  }
+  
+  .toc-toggle {
+    box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.1);
+    background: #ffffff; /* Warna tombol biru */
+    color: rgb(0, 0, 0);
+    font-weight: bold;
+    border: none;
+    padding: 8px 12px;
+    cursor: pointer;
+    width: 100%;
+    border-radius: 5px;
+    font-size: 16px;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    transition: background 0.3s;
+  }
+  
+  .toc-toggle:hover {
+    background: #0056b3; /* Warna lebih gelap saat hover */
+    color: #dee4eb;
+  }
+  
+  #toc-content {
+    display: none; /* Awalnya disembunyikan */
+    margin-top: 10px;
+    box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  #TableOfContents ul {
+    padding-left: 15px;
+  }
+  
+  #TableOfContents li {
+    margin-bottom: 5px;
+  }
+  
+  #TableOfContents a {
+    text-decoration: none;
+    color: #007bff; /* Warna link */
+    font-size: 14px;
+    transition: color 0.3s;
+  }
+  
+  #TableOfContents a:hover {
+    color: #000000; /* Warna lebih gelap saat hover */
+  }
+  
+  :target::before {
+    content: "";
+    display: block;
+    height: 80px; /* Sesuaikan dengan tinggi header */
+    margin-top: -80px; /* Mengimbangi header */
+  }
+  
+  /* TABLE OF CONTENT END */
+    .toc-sidebar {
+      display: none; /* Sembunyikan ToC */
+    }
+    .page-wrapper {
+        gap: 0; /* Hapus gap jika sidebar hilang */
+    }
+    /* Jika Anda punya class .main-content, pastikan lebarnya sesuai */
+    /* .main-content { max-width: 100%; } */
+  }
