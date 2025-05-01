@@ -2,7 +2,7 @@ baseURL = 'https://menurutpsikologi.github.io/'
 languageCode = 'id-ID'
 defaultContentLanguage = "id"
 defaultContentLang = "id"
-title = 'Menurut Psikologi'
+title = 'Code Psikologi'
 enableRobotsTXT = true
 tableOfContents = true
 
